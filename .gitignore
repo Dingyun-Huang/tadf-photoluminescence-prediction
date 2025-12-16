@@ -128,35 +128,17 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Machine Learning / Data Science specific
-*.pkl
-*.pickle
-*.h5
-*.hdf5
-*.pt
-*.pth
-*.ckpt
-*.safetensors
-*.bin
-*.npz
-*.npy
-*.joblib
-
 # Dataset files
-*.csv
 *.tsv
-*.json
 *.jsonl
 *.parquet
 *.feather
-*.xlsx
 *.xls
 *.sdf
 *.mol
 *.mol2
 *.pdb
 *.xyz
-*.pt
 
 # Model outputs and results
 models/
@@ -197,12 +179,6 @@ Thumbs.db
 
 # Conda
 .conda/
-
-# PyTorch specific
-lightning_logs/
-*.pt
-*.pth
-default_save_dir/
 
 # Weights & Biases
 wandb/
