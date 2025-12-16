@@ -1,0 +1,39 @@
+method: bayes
+metric:
+  name: val_mae
+  goal: minimize
+parameters:
+  epochs:
+    value: 100
+  batch_size:
+    value: 64
+  learning_rate:
+    distribution: log_uniform_values
+    min: 0.0001
+    max: 0.05
+  hidden_channels:
+    values: [16, 32]
+  num_layers:
+    values: [12, 16, 20]
+  aggr:
+    values: ['add', 'max']
+  jk:
+    values: ['cat', 'last']
+  act:
+    value: 'silu'
+  dropout_rate:
+    value: 0.1
+  input_noise_std:
+    values: [0.0, 0.1]
+  mlp_hidden_dim:
+    values: [32, 64]
+  use_validation_split:
+    value: False
+  use_mol_size:
+    values: [True, False]
+  use_solvent:
+    values: [True, False]
+  hetero:
+    value: True
+  augmentation:
+    value: 'none'

@@ -1,0 +1,80 @@
+# Python cache and compiled files
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Model files and checkpoints
+*.pt
+*.pth
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+*.ckpt
+*.safetensors
+
+# Data files
+*.csv
+*.json
+*.npy
+*.npz
+*.sdf
+*.mol
+*.traj
+
+# Results and outputs
+results/
+outputs/
+models/
+model/
+checkpoints/
+wandb/
+logs/
+figures/
+plots/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Distribution files
+dist/
+build/
+*.egg-info/
+
+# Cache
+.cache/
+cache/
+
+# MLflow
+.mlflow/
+mlruns/
+
+# Large files
+*.core.*

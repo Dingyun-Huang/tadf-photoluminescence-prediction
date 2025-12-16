@@ -1,0 +1,33 @@
+group: "graphsage_hetero_final_models"
+tags: ["h=28", "use_H"]
+use_H: True
+batch_size: 64
+epochs: 400
+warmup_epochs: 5
+learning_rate: 0.005
+augmentation: null
+pl_noise: 0.008
+do_train: True
+do_eval: True
+do_predict: True
+save_model: False
+save_path: 'model/graphsage_hetero_model'
+plot_predictions: False
+find_lr: False
+use_solvent: False
+disable_wandb: False
+use_mol_size: False
+use_validation_split: True
+hetero: True
+input_noise_std: 0.1
+mlp_hidden_dim: 28
+gnn:
+  act: 'silu'
+  jk: cat
+  act_first: False
+  hidden_channels: 28
+  # out_channels: 32
+  num_layers: 8
+  norm: batch
+  aggr: add
+  project: False
