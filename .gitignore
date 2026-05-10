@@ -134,7 +134,6 @@ dmypy.json
 *.parquet
 *.feather
 *.xls
-*.sdf
 *.mol
 *.mol2
 *.pdb
