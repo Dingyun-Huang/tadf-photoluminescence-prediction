@@ -49,7 +49,7 @@ def read_elements(filepath):
 
 
 if __name__ == "__main__":
-    elements = read_elements("/grand/SolarWindowsADSP/dingyun/tadf/papers/wiley_pdf2md/output/10.1002_adfm.201802031/auto/10.1002_adfm.201802031.md")
+    elements = read_elements("/path/to/your/file.md")
     doc = Document(*elements)
     doc.models = [PhotoluminescenceWavelength]
     doc.records.serialize()

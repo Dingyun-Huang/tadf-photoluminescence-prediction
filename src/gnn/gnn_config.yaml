@@ -6,7 +6,7 @@ epochs: 400
 warmup_epochs: 5
 learning_rate: 0.005
 augmentation: null
-pl_noise: 0.008
+pl_noise: 0
 do_train: True
 do_eval: True
 do_predict: True
