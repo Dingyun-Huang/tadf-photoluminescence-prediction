@@ -198,9 +198,6 @@ class TadfPL(InMemoryDataset):
         data_list = []
         for i, mol in enumerate(tqdm(suppl)): #  i is the order or the molecule in the sdf file
             
-            if mol.GetProp('_Name').split('_')[-1] in ['912', '619', '165', '878',  '35', '819', '889',  '38', '478']:
-                continue
-            
             if not self.use_H:
                 mol = Chem.RemoveHs(mol)
 
