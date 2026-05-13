@@ -69,6 +69,18 @@ This reads **`sweep_config.yaml`** and runs a Weights & Biases sweep (`wandb.swe
 Please use the following the citation if you use any part of this codebase in your work.
 
 ```bibtex
+@article{doi:10.1021/acs.jcim.6c00425,
+  author = {Huang, Dingyun and Cole, Jacqueline M.},
+  title = {Machine-Learning Predictions of Photoluminescence in Molecules Exhibiting Thermally Activated Delayed Fluorescence with Implicit Experimental Validation},
+  journal = {Journal of Chemical Information and Modeling},
+  volume = {0},
+  number = {0},
+  pages = {null},
+  year = {0},
+  doi = {10.1021/acs.jcim.6c00425},
+  URL = {https://doi.org/10.1021/acs.jcim.6c00425},
+  eprint = {https://doi.org/10.1021/acs.jcim.6c00425}
+}
 ```
 
 ## License
