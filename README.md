@@ -2,11 +2,13 @@
 
 Code for predicting thermally activated delayed fluorescence (TADF) photoluminescence properties from molecular structure using graph neural networks (GNNs), plus utilities for dataset construction and simpler fingerprint baselines.
 
+This repository is constantly being updated right now, so please raise an issue when you find a problem running our code.
+
 ## Repository layout
 
 | Path | Purpose |
 |------|---------|
-| `src/gnn/` | GraphSAGE-based model (homo/hetero), training loop, experiment entry points |
+| `src/gnn/` | GraphSAGE-based model (hetero), training loop, experiment entry points |
 | `src/data_processing/` | `TadfPL` dataset (PyG `InMemoryDataset`), raw CSV/SDF splits |
 | `src/fingerprints/` | Ridge regression on molecular fingerprints (Jupyter notebook) |
 | `src/utils/` | Shared visualization helpers |
@@ -16,18 +18,18 @@ Code for predicting thermally activated delayed fluorescence (TADF) photolumines
 
 Python **3.10+** is recommended. Dependencies are split by use case:
 
-- **`requirements-model-training.txt`** — GNN training: PyTorch, PyTorch Geometric, RDKit, Lightning, Weights & Biases, etc.  
+- **`requirements-model-training.txt`** — GNN training: PyTorch, PyTorch Geometric, RDKit, Weights & Biases, etc.  
   Many entries are pinned to **CUDA 12.4** wheels (`+cu124`). On CPU-only or other CUDA versions, install a matching [PyTorch](https://pytorch.org/get-started/locally/) stack first, then install the remaining packages (you may need to adjust or omit `pyg-lib` / `torch_*` extension wheels to match your PyTorch build).
 
-- **`requirements-data-mining.txt`** — Rebuilding or extending the literature-mining pipeline. This file reflects a **cluster/conda** environment (local `file://` wheels, private Git SSH URLs, and optional packages). Treat it as a reference; expect to curate a smaller subset for your machine.
+- **`requirements-data-mining.txt`** — Rebuilding or extending the literature-mining pipeline. This file reflects a **cluster/conda** environment (local `file://` wheels, private Git SSH URLs, and optional packages). Treat it as a reference; expect to curate a smaller subset for your machine. You can also start with the instruction in this repository https://github.com/Dingyun-Huang/chemdataextractorTADF for creating an environment for data-mining.
 
 ## Dataset
 
 The bundled **TadfPL** dataset lives under `src/data_processing/tadf_pl/`:
 
-- Structures and targets are built by `src/data_processing/tadf_dataset.py` (`TadfPL`).
+- Features and targets are built by `src/data_processing/tadf_dataset.py` (`TadfPL`).
 - Train / validation / test molecule IDs are listed in `src/data_processing/tadf_pl/raw/train.csv`, `val.csv`, and `test.csv`.
-- `TadfPL_rdkit_one_conf.sdf` and `TadfPL.csv` provide raw inputs for processing.
+- `TadfPL_rdkit_one_conf.sdf` provide raw inputs for processing.
 
 RDKit is used when preprocessing; a preprocessed cache can be used when RDKit is unavailable (see the class docstring in `tadf_dataset.py`).
 
