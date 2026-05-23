@@ -103,7 +103,7 @@ celerybeat.pid
 
 # Environments
 .env
-.venv
+.venv*
 env/
 venv/
 ENV/
@@ -223,3 +223,6 @@ docker-compose.yml
 *.out
 *.err
 slurm-*.out
+
+# Backup files
+*.bak
