@@ -11,7 +11,7 @@ import argparse
 from torch_geometric.seed import seed_everything
 
 # Add data processing path
-DATA_DIR = "../../data_processing"
+DATA_DIR = "../data_processing"
 module_path = os.path.abspath(DATA_DIR)
 if module_path not in sys.path:
     sys.path.append(module_path)

@@ -9,7 +9,7 @@ import torch
 from torch_geometric.loader import DataLoader
 
 # Add path for tadf_dataset import
-DATA_DIR = "../../../data_processing"
+DATA_DIR = "../../data_processing"
 module_path = os.path.abspath(os.path.join(os.path.dirname(__file__), DATA_DIR))
 if module_path not in sys.path:
     sys.path.append(module_path)
@@ -20,7 +20,7 @@ from tadf_dataset import TadfPL
 class TadfDataManager:
     """Manages TADF dataset loading and preprocessing."""
     
-    def __init__(self, data_dir="../../data_processing"):
+    def __init__(self, data_dir="../data_processing"):
         self.data_dir = data_dir
         self.pl_mean = None
         self.pl_std = None

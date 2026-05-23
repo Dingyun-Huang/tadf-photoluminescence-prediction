@@ -1,4 +1,4 @@
-group: "graphsage_hetero_final_models"
+﻿group: "graphsage_hetero_final_models"
 tags: ["h=28", "use_H"]
 use_H: True
 batch_size: 64
@@ -15,7 +15,7 @@ save_path: 'model/graphsage_hetero_model'
 plot_predictions: False
 find_lr: False
 use_solvent: False
-disable_wandb: False
+disable_wandb: True
 use_mol_size: False
 use_validation_split: True
 hetero: True
