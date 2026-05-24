@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/dingyun-huang/tadf-photoluminescence-prediction/feature/inference-script/assets/demo.mp4)
+<video src="assets/demo.mp4" controls width="100%"></video>
 
 # TADF photoluminescence prediction
 
