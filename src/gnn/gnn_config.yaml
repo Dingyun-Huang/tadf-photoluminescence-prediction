@@ -10,8 +10,8 @@ pl_noise: 0
 do_train: True
 do_eval: True
 do_predict: True
-save_model: False
-save_path: 'model/graphsage_hetero_model'
+save_model: True
+save_path: '../../model_archive/'
 plot_predictions: False
 find_lr: False
 use_solvent: False

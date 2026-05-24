@@ -8,7 +8,7 @@ If you encounter problems running the code, please [open an issue](https://githu
 
 | Path | Purpose |
 |------|---------|
-| `src/gnn/` | Heterogeneous GraphSAGE (HGNN) model, training loop, experiment entry points |
+| `src/gnn/` | Heterogeneous GraphSAGE (HGNN) model, training loop, experiment and inference entry points |
 | `src/data_processing/` | `TadfPL` dataset (PyG `InMemoryDataset`), raw CSV/SDF splits |
 | `src/fingerprints/` | Ridge regression on molecular fingerprints (Jupyter notebook) |
 | `src/utils/` | Shared visualization helpers |
@@ -95,6 +95,36 @@ python run_experiment.py --seed 2000
 
 By default, `disable_wandb: true` in `gnn_config.yaml`, so no W&B account is needed for a local run. To enable online logging, set `disable_wandb: false` and run `wandb login`.
 
+## Inference (HGNN)
+
+Run predictions from a SMILES string using a saved model archive. You **must** run from `src/gnn` (same as training).
+
+### 1. Obtain a model archive
+
+Train with checkpointing enabled in `gnn_config.yaml`:
+
+```yaml
+save_model: true
+save_path: 'model/graphsage_hetero_model'
+```
+
+After training, the archive is written to `src/gnn/model/graphsage_hetero_model/model_8_layer_28_h.pt`. It contains the model weights, training configuration, and PL normalization statistics.
+
+### 2. Run inference
+
+```bash
+cd src/gnn
+python run_inference.py --smiles "c1ccc2c(c1)Oc1ccccc1N2c1ccc2c3c(cccc13)-c1nc3cc(-c4ccncc4)c(-c4ccncc4)cc3nc1-2"
+```
+
+Optional arguments:
+
+- `--model PATH` — path to a saved archive (default: `model/graphsage_hetero_model/model_8_layer_28_h.pt`)
+- `--config PATH` — model configuration YAML (default: `gnn_config.yaml`)
+- `--device {auto,cpu,cuda}` — compute device (default: `auto`)
+
+The script prints predicted photoluminescence in **eV** and **nm**. If the archive does not include normalization statistics (older state-dict-only checkpoints), they are recomputed from the training split.
+
 ## Dataset
 
 The bundled **TadfPL** dataset lives under `src/data_processing/tadf_pl/`:
@@ -111,7 +141,7 @@ Training behavior is controlled by **`src/gnn/gnn_config.yaml`**:
 
 - Architecture: heterogeneous GraphSAGE on typed bonds (`hetero: true`), MLP head, optional solvent/molecular-size features.
 - Training: batch size, epochs, learning rate, normalization, and toggles for train/eval/test, checkpointing, and plots.
-- Checkpoints: set `save_model: true` and `save_path` to write model weights.
+- Checkpoints: set `save_model: true` and `save_path` to write a model archive (weights, config, and normalization stats).
 
 ### Hyperparameter sweep (W&B)
 
@@ -136,6 +166,7 @@ This reads **`sweep_config.yaml`** and runs a Weights & Biases sweep (`wandb.swe
 
 ## Other entry points
 
+- **`src/gnn/run_inference.py`** — Predict PL from a SMILES string using a saved HGNN model archive.
 - **`src/fingerprints/train_fp_ridge_regression.ipynb`** — Ridge regression baseline using fingerprints on the TadfPL table data.
 - **`mining-codes/`** — Scripts for extracting TADF-related quantities from publications. Depends on the custom ChemDataExtractor stack referenced in `requirements-data-mining.txt`.
 
