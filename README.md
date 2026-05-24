@@ -1,3 +1,5 @@
+![](https://raw.githubusercontent.com/dingyun-huang/tadf-photoluminescence-prediction/feature/inference-script/assets/demo.mp4)
+
 # TADF photoluminescence prediction
 
 Code for predicting thermally activated delayed fluorescence (TADF) photoluminescence properties from molecular structure using graph neural networks (GNNs), plus utilities for dataset construction and simpler fingerprint baselines.
@@ -76,7 +78,9 @@ From the repository root:
 pip install -r requirements-model-training.txt
 ```
 
-### 2. Run inference
+### 5. Inference (HGNN)
+
+Run predictions from a SMILES string using a saved model archive. You **must** run from `src/gnn` (same as training).
 
 ```bash
 cd src/gnn
@@ -91,7 +95,7 @@ Optional arguments:
 
 The script prints predicted photoluminescence in **eV** and **nm**. If the archive does not include normalization statistics (older state-dict-only checkpoints), they are recomputed from the training split.
 
-### 5. Run training
+### 6. Run training
 
 You **must** run from `src/gnn` so relative paths resolve to `src/data_processing`:
 
@@ -107,21 +111,6 @@ python run_experiment.py --seed 2000
 ### Weights & Biases
 
 By default, `disable_wandb: true` in `gnn_config.yaml`, so no W&B account is needed for a local run. To enable online logging, set `disable_wandb: false` and run `wandb login`.
-
-## Inference (HGNN)
-
-Run predictions from a SMILES string using a saved model archive. You **must** run from `src/gnn` (same as training).
-
-### 1. Obtain a model archive
-
-Train with checkpointing enabled in `gnn_config.yaml`:
-
-```yaml
-save_model: true
-save_path: 'model/graphsage_hetero_model'
-```
-
-After training, the archive is written to `src/gnn/model/graphsage_hetero_model/model_8_layer_28_h.pt`. It contains the model weights, training configuration, and PL normalization statistics.
 
 ## Dataset
 
