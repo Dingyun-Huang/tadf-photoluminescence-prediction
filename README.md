@@ -171,6 +171,10 @@ Please use the following citation if you use any part of this codebase in your w
 }
 ```
 
+## Acknowledgements
+
+D.H. is thankful to the Cambridge Commonwealth, European and International Trust and the China Scholarship Council, for a Ph.D. scholarship. J.M.C. is grateful for funding from the EPSRC AI Hub, AIChemy (grant references EP/Y028775/1 and EP/Y028759/1). The authors thank the Argonne Leadership Computing Facility, which is a DOE Office of Science Facility, for use of its research resources, under contract no. DE-AC02-06CH11357.
+
 ## License
 
 This project is licensed under the **MIT License**; see [`LICENSE`](LICENSE).
