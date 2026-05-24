@@ -128,7 +128,16 @@ class ExperimentRunner:
         if config.get("save_model", False):
             save_path = config.get("save_path", "default_save_dir")
             os.makedirs(save_path, exist_ok=True)
-            trainer.save_model(os.path.join(save_path, "model_8_layer_28_h.pt"))
+            model_archive = {
+                "state_dict": trainer.model.state_dict(),
+                "config": config,
+                "pl_mean": pl_mean,
+                "pl_std": pl_std,
+            }
+            torch.save(
+                model_archive,
+                os.path.join(save_path, "checkpoint.pt"),
+            )
         
         # Evaluate on test set
         if config.get("do_predict", True):
