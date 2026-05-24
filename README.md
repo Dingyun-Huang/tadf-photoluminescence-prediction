@@ -1,4 +1,4 @@
-![](./assets/demo.gif)
+![](./assets/demo_2x.gif)
 
 # TADF photoluminescence prediction
 
