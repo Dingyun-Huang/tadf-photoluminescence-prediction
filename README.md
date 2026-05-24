@@ -9,9 +9,7 @@ If you encounter problems running the code, please [open an issue](https://githu
 | Path | Purpose |
 |------|---------|
 | `src/gnn/` | Heterogeneous GraphSAGE (HGNN) model, training loop, experiment and inference entry points |
-| `src/data_processing/` | `TadfPL` dataset (PyG `InMemoryDataset`), raw CSV/SDF splits |
 | `src/fingerprints/` | Ridge regression on molecular fingerprints (Jupyter notebook) |
-| `src/utils/` | Shared visualization helpers |
 | `mining-codes/` | Literature extraction pipeline (ChemDataExtractor extensions; optional) |
 
 ## Requirements
@@ -78,6 +76,21 @@ From the repository root:
 pip install -r requirements-model-training.txt
 ```
 
+### 2. Run inference
+
+```bash
+cd src/gnn
+python run_inference.py --smiles "c1ccc2c(c1)Oc1ccccc1N2c1ccc2c3c(cccc13)-c1nc3cc(-c4ccncc4)c(-c4ccncc4)cc3nc1-2"
+```
+
+Optional arguments:
+
+- `--model PATH` — path to a saved archive (default: `model/graphsage_hetero_model/model_8_layer_28_h.pt`)
+- `--config PATH` — model configuration YAML (default: `gnn_config.yaml`)
+- `--device {auto,cpu,cuda}` — compute device (default: `auto`)
+
+The script prints predicted photoluminescence in **eV** and **nm**. If the archive does not include normalization statistics (older state-dict-only checkpoints), they are recomputed from the training split.
+
 ### 5. Run training
 
 You **must** run from `src/gnn` so relative paths resolve to `src/data_processing`:
@@ -109,21 +122,6 @@ save_path: 'model/graphsage_hetero_model'
 ```
 
 After training, the archive is written to `src/gnn/model/graphsage_hetero_model/model_8_layer_28_h.pt`. It contains the model weights, training configuration, and PL normalization statistics.
-
-### 2. Run inference
-
-```bash
-cd src/gnn
-python run_inference.py --smiles "c1ccc2c(c1)Oc1ccccc1N2c1ccc2c3c(cccc13)-c1nc3cc(-c4ccncc4)c(-c4ccncc4)cc3nc1-2"
-```
-
-Optional arguments:
-
-- `--model PATH` — path to a saved archive (default: `model/graphsage_hetero_model/model_8_layer_28_h.pt`)
-- `--config PATH` — model configuration YAML (default: `gnn_config.yaml`)
-- `--device {auto,cpu,cuda}` — compute device (default: `auto`)
-
-The script prints predicted photoluminescence in **eV** and **nm**. If the archive does not include normalization statistics (older state-dict-only checkpoints), they are recomputed from the training split.
 
 ## Dataset
 
@@ -164,11 +162,6 @@ This reads **`sweep_config.yaml`** and runs a Weights & Biases sweep (`wandb.swe
 | `NotImplementedError` about RDKit | Install RDKit: `pip install rdkit` (included in `requirements-model-training.txt`). |
 | Training is very slow | Use a CUDA PyTorch build if a GPU is available; reduce `epochs` in `gnn_config.yaml` for testing. |
 
-## Other entry points
-
-- **`src/gnn/run_inference.py`** — Predict PL from a SMILES string using a saved HGNN model archive.
-- **`src/fingerprints/train_fp_ridge_regression.ipynb`** — Ridge regression baseline using fingerprints on the TadfPL table data.
-- **`mining-codes/`** — Scripts for extracting TADF-related quantities from publications. Depends on the custom ChemDataExtractor stack referenced in `requirements-data-mining.txt`.
 
 ## Citation
 
