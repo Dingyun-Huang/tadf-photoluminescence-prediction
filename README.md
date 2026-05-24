@@ -1,4 +1,4 @@
-<video src="assets/demo.mp4" controls width="100%"></video>
+![](./assets/demo.gif)
 
 # TADF photoluminescence prediction
 
