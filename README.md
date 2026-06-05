@@ -156,7 +156,7 @@ This reads **`sweep_config.yaml`** and runs a Weights & Biases sweep (`wandb.swe
 
 ## Citation
 
-Please use the following citation if you use any part of this codebase in your work.
+Please use the following citation if you use any part of this codebase and/or the TadfPL dataset in your work.
 
 ```bibtex
 @article{doi:10.1021/acs.jcim.6c00425,
