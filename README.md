@@ -8,24 +8,9 @@ Paper Here: [Machine-Learning Predictions of Photoluminescence in Molecules Exhi
 
 If you encounter problems running the code, please [open an issue](https://github.com/Dingyun-Huang/tadf-photoluminescence-prediction/issues).
 
-## Repository layout
-
-| Path | Purpose |
-|------|---------|
-| `src/gnn/` | Heterogeneous GraphSAGE (HGNN) model, training loop, experiment and inference entry points |
-| `src/fingerprints/` | Ridge regression on molecular fingerprints (Jupyter notebook) |
-| `mining-codes/` | Literature extraction pipeline (ChemDataExtractor extensions; optional) |
-
 ## Requirements
 
 Python **3.10–3.12** is recommended.
-
-- **`requirements-model-training.txt`** — All dependencies for HGNN training (PyTorch, PyG extension wheels, RDKit, Weights & Biases, etc.), installable in one command. Defaults to a CPU build; see the [Quick start](#2-install-dependencies) below.
-- **`requirements-data-mining.txt`** — Reference snapshot for the literature-mining pipeline (cluster/conda environment with local wheels and private Git URLs). Treat as a reference only. See also [chemdataextractorTADF](https://github.com/Dingyun-Huang/chemdataextractorTADF) for data-mining setup.
-
-## Quick start (HGNN training)
-
-The model is a heterogeneous **GraphSAGE** network (`hetero: true` in `gnn_config.yaml`), with bond-type-specific message passing.
 
 ### 1. Create an environment
 
@@ -44,7 +29,7 @@ pip install -r requirements-model-training.txt
 
 This installs a CPU build that works everywhere. For GPU acceleration, edit the PyTorch/PyG URLs at the top of `requirements-model-training.txt` to match your CUDA version (see [pytorch.org](https://pytorch.org/get-started/locally/) and [PyG](https://pytorch-geometric.readthedocs.io/en/latest/install/installation.html)).
 
-### 3. Inference (HGNN)
+## 3. Inference (HGNN)
 
 Run predictions from a SMILES string using a saved model archive. You **must** run from `src/gnn` (same as training).
 
@@ -61,7 +46,7 @@ Optional arguments:
 
 The script prints predicted photoluminescence in **eV** and **nm**. If the archive does not include normalization statistics (older state-dict-only checkpoints), they are recomputed from the training split.
 
-### 4. Run training
+## 4. Run training
 
 You **must** run from `src/gnn` so relative paths resolve to `src/data_processing`:
 
@@ -105,6 +90,14 @@ python sweep.py
 ```
 
 This reads **`sweep_config.yaml`** and runs a Weights & Biases sweep (`wandb.sweep` / `wandb.agent`).
+
+## Repository layout
+
+| Path | Purpose |
+|------|---------|
+| `src/gnn/` | Heterogeneous GraphSAGE (HGNN) model, training loop, experiment and inference entry points |
+| `src/fingerprints/` | Ridge regression on molecular fingerprints (Jupyter notebook) |
+| `mining-codes/` | Literature extraction pipeline (ChemDataExtractor extensions; optional) |
 
 ## Troubleshooting
 
