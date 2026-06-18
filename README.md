@@ -20,7 +20,7 @@ If you encounter problems running the code, please [open an issue](https://githu
 
 Python **3.10–3.12** is recommended.
 
-- **`requirements-model-training.txt`** — Direct dependencies for HGNN training (PyTorch Geometric, RDKit, Weights & Biases, etc.). PyTorch and PyG extension wheels must be installed **first** using the staged commands below; they are not resolved from PyPI alone.
+- **`requirements-model-training.txt`** — All dependencies for HGNN training (PyTorch, PyG extension wheels, RDKit, Weights & Biases, etc.), installable in one command. Defaults to a CPU build; see the [Quick start](#2-install-dependencies) below.
 - **`requirements-data-mining.txt`** — Reference snapshot for the literature-mining pipeline (cluster/conda environment with local wheels and private Git URLs). Treat as a reference only. See also [chemdataextractorTADF](https://github.com/Dingyun-Huang/chemdataextractorTADF) for data-mining setup.
 
 ## Quick start (HGNN training)
@@ -34,45 +34,7 @@ conda create -n tadf-predict python=3.11
 conda activate tadf-predict
 ```
 
-### 2. Install PyTorch
-
-Pick the line that matches your hardware. For other CUDA versions, see [pytorch.org/get-started/locally](https://pytorch.org/get-started/locally/).
-
-**CUDA 12.4 (GPU):**
-
-```bash
-pip install torch==2.4.1 --index-url https://download.pytorch.org/whl/cu124
-```
-
-**CPU only:**
-
-```bash
-pip install torch==2.4.1 --index-url https://download.pytorch.org/whl/cpu
-```
-
-Verify:
-
-```bash
-python -c "import torch; print(torch.__version__, torch.version.cuda)"
-```
-
-### 3. Install PyG extension wheels
-
-PyG publishes separate wheels per PyTorch/CUDA build. Use `torch-2.4.0` in the URL for the PyTorch 2.4.* line ([PyG installation docs](https://pytorch-geometric.readthedocs.io/en/latest/install/installation.html)).
-
-**CUDA 12.4:**
-
-```bash
-pip install pyg-lib torch-scatter torch-sparse torch-cluster torch-spline-conv -f https://data.pyg.org/whl/torch-2.4.0+cu124.html
-```
-
-**CPU:**
-
-```bash
-pip install pyg-lib torch-scatter torch-sparse torch-cluster torch-spline-conv -f https://data.pyg.org/whl/torch-2.4.0+cpu.html
-```
-
-### 4. Install remaining training dependencies
+### 2. Install dependencies
 
 From the repository root:
 
@@ -80,7 +42,9 @@ From the repository root:
 pip install -r requirements-model-training.txt
 ```
 
-### 5. Inference (HGNN)
+This installs a CPU build that works everywhere. For GPU acceleration, edit the PyTorch/PyG URLs at the top of `requirements-model-training.txt` to match your CUDA version (see [pytorch.org](https://pytorch.org/get-started/locally/) and [PyG](https://pytorch-geometric.readthedocs.io/en/latest/install/installation.html)).
+
+### 3. Inference (HGNN)
 
 Run predictions from a SMILES string using a saved model archive. You **must** run from `src/gnn` (same as training).
 
@@ -97,7 +61,7 @@ Optional arguments:
 
 The script prints predicted photoluminescence in **eV** and **nm**. If the archive does not include normalization statistics (older state-dict-only checkpoints), they are recomputed from the training split.
 
-### 6. Run training
+### 4. Run training
 
 You **must** run from `src/gnn` so relative paths resolve to `src/data_processing`:
 
@@ -146,8 +110,7 @@ This reads **`sweep_config.yaml`** and runs a Weights & Biases sweep (`wandb.swe
 
 | Problem | Fix |
 |---------|-----|
-| `No matching distribution found for torch==2.4.1+cu124` | Install PyTorch separately with `--index-url` (step 2 above); do not rely on `pip install -r` alone for CUDA wheels. |
-| PyG import error or `torch-scatter` mismatch | Reinstall PyG extensions using the wheel URL that matches your installed PyTorch and CUDA (step 3 above). |
+| PyTorch/PyG wheel not found, or `torch-scatter` mismatch | Make sure the `--extra-index-url` and `-f` URLs at the top of `requirements-model-training.txt` match your platform and CUDA build (CPU by default). |
 | `wandb.errors.AuthenticationError` | Set `disable_wandb: true` in `gnn_config.yaml`, or run `wandb login`. |
 | `FileNotFoundError` for split CSVs or SDF | Ensure you are in `src/gnn` when running `run_experiment.py`. |
 | `NotImplementedError` about RDKit | Install RDKit: `pip install rdkit` (included in `requirements-model-training.txt`). |

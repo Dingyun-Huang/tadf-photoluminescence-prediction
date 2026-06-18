@@ -1,18 +1,22 @@
 # HGNN (heterogeneous GraphSAGE) training dependencies.
 #
-# Install PyTorch and PyG extension wheels BEFORE this file — see README.md.
-#
-# Step 1 — PyTorch (pick ONE line for your platform):
-#   pip install torch==2.4.1 --index-url https://download.pytorch.org/whl/cu124
-#   pip install torch==2.4.1 --index-url https://download.pytorch.org/whl/cpu
-#
-# Step 2 — PyG extensions (match your PyTorch/CUDA build):
-#   pip install pyg-lib torch-scatter torch-sparse torch-cluster torch-spline-conv -f https://data.pyg.org/whl/torch-2.4.0+cu124.html
-#   pip install pyg-lib torch-scatter torch-sparse torch-cluster torch-spline-conv -f https://data.pyg.org/whl/torch-2.4.0+cpu.html
-#
-# Step 3 — remaining packages:
+# CPU install (works on any OS), from the repository root:
 #   pip install -r requirements-model-training.txt
+#
+# For a GPU build, edit the two URLs below to match your CUDA version (see
+# https://pytorch.org/get-started/locally/ and
+# https://pytorch-geometric.readthedocs.io/en/latest/install/installation.html),
+# and change torch==2.4.1+cpu to torch==2.4.1.
 
+--extra-index-url https://download.pytorch.org/whl/cpu
+-f https://data.pyg.org/whl/torch-2.4.0+cpu.html
+
+torch==2.4.1+cpu
+pyg-lib
+torch-scatter
+torch-sparse
+torch-cluster
+torch-spline-conv
 torch-geometric==2.6.1
 rdkit==2025.9.1
 wandb==0.22.3
